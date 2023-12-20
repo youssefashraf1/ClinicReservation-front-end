@@ -31,9 +31,8 @@ interface slected {
 export class UpdateComponent {
   constructor(
     private http: HttpClient,
-    private router: Router
-  ) // private dataService: DataService
-  {}
+    private router: Router // private dataService: DataService
+  ) {}
 
   doctor: doctor[] = [];
   doctorSlots: Slot[] = [];
@@ -48,7 +47,9 @@ export class UpdateComponent {
 
   getdoctor() {
     this.http
-      .get('http://127.0.0.1:8000/api/v1/doctor')
+      .get(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor'
+      )
       .subscribe((res: any) => {
         this.doctor = res.data;
         console.log(this.doctor);
@@ -56,7 +57,10 @@ export class UpdateComponent {
   }
   getDoctorSlots(did: any) {
     this.http
-      .post('http://127.0.0.1:8000/api/v1/patient/doctor/slots', did)
+      .post(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/doctor/slots',
+        did
+      )
       .subscribe((res: any) => {
         this.doctorSlots = res.data;
         console.log(this.doctorSlots);

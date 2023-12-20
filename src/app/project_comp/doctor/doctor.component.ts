@@ -24,7 +24,9 @@ export class DoctorComponent {
   }
   getSlot() {
     this.http
-      .get('http://127.0.0.1:8000/api/v1/doctor/slots')
+      .get(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor/slots'
+      )
       .subscribe((res: any) => {
         console.log(res.data);
         this.slots = res.data;
@@ -32,7 +34,10 @@ export class DoctorComponent {
   }
   addSlot() {
     this.http
-      .post('http://127.0.0.1:8000/api/v1/doctor/slot', this.newSlot)
+      .post(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor/slot',
+        this.newSlot
+      )
       .subscribe((res) => {
         this.newSlot = { date: '', time: '', _id: '' };
         this.getSlot();
@@ -44,7 +49,7 @@ export class DoctorComponent {
     if (index > -1) {
       this.http
         .delete(
-          'http://127.0.0.1:8000/api/v1/doctor/slot/delete/' +
+          'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor/slot/delete/' +
             this.slots[index]._id
         )
         .subscribe();

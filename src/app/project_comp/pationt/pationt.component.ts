@@ -71,7 +71,9 @@ export class PationtComponent {
 
   getdoctor() {
     this.http
-      .get('http://127.0.0.1:8000/api/v1/doctor')
+      .get(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor'
+      )
       .subscribe((res: any) => {
         this.doctor = res.data;
         this.temp = this.doctor[0].name;
@@ -80,7 +82,10 @@ export class PationtComponent {
   }
   getDoctorSlots(did: any) {
     this.http
-      .post('http://127.0.0.1:8000/api/v1/patient/doctor/slots', did)
+      .post(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/doctor/slots',
+        did
+      )
       .subscribe((res: any) => {
         this.doctorSlots = res.data;
 
@@ -92,12 +97,15 @@ export class PationtComponent {
     console.log(slot);
     this.http
       .post(
-        'http://127.0.0.1:8000/api/v1/patient/appointment/slot/' + slot._id,
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment/slot/' +
+          slot._id,
         slot
       )
       .subscribe((res: any) => {
         this.http
-          .get('http://127.0.0.1:8000/api/v1/patient/appointment')
+          .get(
+            'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment'
+          )
           .subscribe((res: any) => {
             this.selectedslots = res.data;
 
@@ -107,7 +115,9 @@ export class PationtComponent {
   }
   display() {
     this.http
-      .get('http://127.0.0.1:8000/api/v1/patient/appointment')
+      .get(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment'
+      )
       .subscribe((res: any) => {
         this.selectedslots = res.data;
       });
@@ -125,7 +135,8 @@ export class PationtComponent {
     if (index1 > -1) {
       this.http
         .delete(
-          'http://127.0.0.1:8000/api/v1/patient/appointment/delete/' + slot._id
+          'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment/delete/' +
+            slot._id
         )
         .subscribe((res) => {
           this.display();
@@ -141,10 +152,13 @@ export class PationtComponent {
     slot.is_updated = false;
     this.http
       .put(
-        'http://127.0.0.1:8000/api/v1/patient/appointment/' + this.sltidd,
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment/' +
+          this.sltidd,
         slot
       )
-      .subscribe();
+      .subscribe((res: any) => {
+        this.display();
+      });
   }
 
   logout() {

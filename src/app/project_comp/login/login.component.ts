@@ -24,7 +24,10 @@ export class LoginComponent {
   Login(loguser: loged) {
     if (loguser.role == 'DOCTOR') {
       this.http
-        .post('http://127.0.0.1:8000/api/v1/auth/signin', loguser)
+        .post(
+          'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/auth/signin',
+          loguser
+        )
         .subscribe(
           (res: any) => {
             localStorage.setItem('token', res.token);
@@ -38,11 +41,14 @@ export class LoginComponent {
         );
     } else if (loguser.role == 'PATIENT') {
       this.http
-        .post('http://127.0.0.1:8000/api/v1/auth/signin', loguser)
+        .post(
+          'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/auth/signin',
+          loguser
+        )
         .subscribe(
           (res: any) => {
             localStorage.setItem('token', res.token);
-
+            localStorage.setItem('pationt email', loguser.email);
             alert('loged in successfully');
             this.router.navigate(['pationt']);
           },

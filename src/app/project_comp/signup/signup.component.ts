@@ -14,15 +14,20 @@ export class SignupComponent {
 
   Rejectiration(user: any) {
     console.log(user);
-    this.http.post('http://127.0.0.1:8000/api/v1/auth/signup', user).subscribe(
-      (res: any) => {
-        console.log(user);
-        alert('Rejestered successfully');
-        this.router.navigate(['login']);
-      },
-      (error) => {
-        console.log('error happened');
-      }
-    );
+    this.http
+      .post(
+        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/auth/signup',
+        user
+      )
+      .subscribe(
+        (res: any) => {
+          console.log(user);
+          alert('Rejestered successfully');
+          this.router.navigate(['login']);
+        },
+        (error) => {
+          console.log('error happened');
+        }
+      );
   }
 }
