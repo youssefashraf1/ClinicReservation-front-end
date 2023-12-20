@@ -15,6 +15,8 @@ COPY . .
 
 USER node
 
+RUN sudo chown -R node:node /app
+
 EXPOSE 4200
 
 CMD ["npm", "start"]
