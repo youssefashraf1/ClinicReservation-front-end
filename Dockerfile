@@ -18,6 +18,7 @@ RUN mkdir -p /var/cache/nginx
 RUN chown -R nginx:nginx /var/cache/nginx
 RUN mkdir -p /var/cache/nginx/client_temp && \
     mkdir -p /var/cache/nginx/proxy_temp && \
+    mkdir -p /var/cache/nginx/fastcgi_temp && \
     chown -R nginx:nginx /var/cache/nginx
 
 COPY --chown=nginx:nginx --from=build /app/dist/project /var/www/html/
