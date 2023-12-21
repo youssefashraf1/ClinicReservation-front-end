@@ -12,5 +12,5 @@ RUN chown -R 1013690000:0 /app/.angular
 ENV API_URL=https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
 USER 1013690000
 COPY . .
-RUN sed -i "s|DEFAULT_API_URL|$API_URL|g" /app/src/environments/environment.prod.ts
+RUN sed -i "s|DEFAULT_API_URL|$API_URL|g" /app/src/environments/environments.ts
 CMD ["npm", "start"]
