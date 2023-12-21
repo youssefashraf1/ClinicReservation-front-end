@@ -1,27 +1,16 @@
-FROM node:18.18.0-alpine3.18 AS build
-
+FROM node:16.14
 WORKDIR /app
-
 COPY package*.json ./
-
-RUN npm install -g @angular/cli
 
 RUN npm install
 
+RUN if [ ! -d "/.npm" ]; then mkdir /.npm; fi
+RUN if [ ! -d "/app/.angular" ]; then mkdir /app/.angular; fi
+
+RUN chown -R 1013690000:0 /.npm
+RUN chown -R 1013690000:0 /app/.angular
+
+
+USER 1013690000
 COPY . .
-
-RUN ng build
-
-FROM nginx:alpine
-
-RUN mkdir -p /var/cache/nginx
-RUN chown -R nginx:nginx /var/cache/nginx
-RUN mkdir -p /var/cache/nginx/client_temp && \
-    mkdir -p /var/cache/nginx/proxy_temp && \
-    mkdir -p /var/cache/nginx/fastcgi_temp && \
-    chown -R nginx:nginx /var/cache/nginx
-
-COPY --chown=nginx:nginx --from=build /app/dist/project /var/www/html/
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", "start"]
