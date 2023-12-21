@@ -9,8 +9,7 @@ RUN if [ ! -d "/app/.angular" ]; then mkdir /app/.angular; fi
 
 RUN chown -R 1013690000:0 /.npm
 RUN chown -R 1013690000:0 /app/.angular
-
-
+ENV API_URL=https://api.example.com
 USER 1013690000
 COPY . .
 CMD ["npm", "start"]
