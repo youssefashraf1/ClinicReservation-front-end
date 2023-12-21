@@ -14,8 +14,10 @@ RUN ng build
 
 FROM nginx:alpine
 
+RUN mkdir -p /var/cache/nginx
+RUN chown -R nginx:nginx /var/cache/nginx
+
 COPY --chown=nginx:nginx --from=build /app/dist/project /var/www/html/
-RUN --chown=nginx:nginx /var/cache/nginx
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
