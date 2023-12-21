@@ -5,4 +5,4 @@ COPY ["package.json", "package-lock.json", "./"]
 RUN ["npm", "ci"]
 COPY . .
 RUN ["npx", "ng", "build"]
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]
