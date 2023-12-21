@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 // import { DataService } from 'src/app/data.service';
+import { environment } from '../../../environments/environments';
 
 interface Slot {
   _id: string;
@@ -43,6 +44,8 @@ export class PationtComponent {
   doctor: doctor[] = [];
   doctorSlots: Slot[] = [];
   selectedslots: Slot[] = [];
+  apiUrl: string = environment.apiUrl;
+
   newSlot: Slot = {
     _id: '',
     doctor_name: '',
@@ -70,22 +73,15 @@ export class PationtComponent {
   }
 
   getdoctor() {
-    this.http
-      .get(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor'
-      )
-      .subscribe((res: any) => {
-        this.doctor = res.data;
-        this.temp = this.doctor[0].name;
-        console.log(this.doctor);
-      });
+    this.http.get(this.apiUrl + '/api/v1/doctor').subscribe((res: any) => {
+      this.doctor = res.data;
+      this.temp = this.doctor[0].name;
+      console.log(this.doctor);
+    });
   }
   getDoctorSlots(did: any) {
     this.http
-      .post(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/doctor/slots',
-        did
-      )
+      .post(this.apiUrl + '/api/v1/patient/doctor/slots', did)
       .subscribe((res: any) => {
         this.doctorSlots = res.data;
 
@@ -96,16 +92,10 @@ export class PationtComponent {
   addSlot(slot: Slot) {
     console.log(slot);
     this.http
-      .post(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment/slot/' +
-          slot._id,
-        slot
-      )
+      .post(this.apiUrl + '/api/v1/patient/appointment/slot/' + slot._id, slot)
       .subscribe((res: any) => {
         this.http
-          .get(
-            'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment'
-          )
+          .get(this.apiUrl + '/api/v1/patient/appointment')
           .subscribe((res: any) => {
             this.selectedslots = res.data;
 
@@ -115,9 +105,7 @@ export class PationtComponent {
   }
   display() {
     this.http
-      .get(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment'
-      )
+      .get(this.apiUrl + '/api/v1/patient/appointment')
       .subscribe((res: any) => {
         this.selectedslots = res.data;
       });
@@ -134,10 +122,7 @@ export class PationtComponent {
     // }
     if (index1 > -1) {
       this.http
-        .delete(
-          'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment/delete/' +
-            slot._id
-        )
+        .delete(this.apiUrl + '/api/v1/patient/appointment/delete/' + slot._id)
         .subscribe((res) => {
           this.display();
         });
@@ -151,11 +136,7 @@ export class PationtComponent {
   subupdate(slot: Slot) {
     slot.is_updated = false;
     this.http
-      .put(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/appointment/' +
-          this.sltidd,
-        slot
-      )
+      .put(this.apiUrl + '/api/v1/patient/appointment/' + this.sltidd, slot)
       .subscribe((res: any) => {
         this.display();
       });

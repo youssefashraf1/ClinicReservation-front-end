@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 // import { DataService } from 'src/app/data.service';
+import { environment } from '../../../environments/environments';
 
 interface Slot {
   _id: string;
@@ -41,6 +42,8 @@ export class UpdateComponent {
   slected: id = { _id: '' };
   doctorname: string = '';
   temp: any;
+  apiUrl: string = environment.apiUrl;
+
   ngOnInit(): void {
     this.getdoctor();
   }
@@ -48,7 +51,7 @@ export class UpdateComponent {
   getdoctor() {
     this.http
       .get(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor'
+        this.apiUrl + '/api/v1/doctor'
       )
       .subscribe((res: any) => {
         this.doctor = res.data;
@@ -58,7 +61,7 @@ export class UpdateComponent {
   getDoctorSlots(did: any) {
     this.http
       .post(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/patient/doctor/slots',
+        this.apiUrl + '/api/v1/patient/doctor/slots',
         did
       )
       .subscribe((res: any) => {

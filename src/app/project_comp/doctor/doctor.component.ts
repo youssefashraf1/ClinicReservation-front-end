@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { environment } from '../../../environments/environments';
 interface Slot {
   date: string;
   time: string;
@@ -19,14 +19,14 @@ export class DoctorComponent {
   slots: Slot[] = [];
   newSlot: Slot = { date: '', time: '', _id: '' };
   doctorName: string = '';
+  apiUrl: string = environment.apiUrl;
+
   ngOnInit(): void {
     this.getSlot();
   }
   getSlot() {
     this.http
-      .get(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor/slots'
-      )
+      .get(this.apiUrl + '/api/v1/doctor/slots')
       .subscribe((res: any) => {
         console.log(res.data);
         this.slots = res.data;
@@ -34,10 +34,7 @@ export class DoctorComponent {
   }
   addSlot() {
     this.http
-      .post(
-        'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor/slot',
-        this.newSlot
-      )
+      .post(this.apiUrl + '/api/v1/doctor/slot', this.newSlot)
       .subscribe((res) => {
         this.newSlot = { date: '', time: '', _id: '' };
         this.getSlot();
@@ -49,8 +46,7 @@ export class DoctorComponent {
     if (index > -1) {
       this.http
         .delete(
-          'https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com/api/v1/doctor/slot/delete/' +
-            this.slots[index]._id
+          this.apiUrl + '/api/v1/doctor/slot/delete/' + this.slots[index]._id
         )
         .subscribe();
       this.slots.splice(index, 1);
