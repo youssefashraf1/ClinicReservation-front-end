@@ -5,6 +5,3 @@ COPY ["package.json", "package-lock.json", "./"]
 RUN ["npm", "ci"]
 COPY . .
 RUN ["npx", "ng", "build"]
-
-FROM nginxinc/nginx-unprivileged:alpine3.18-perl
-COPY --chown=nginx:nginx ./default.conf.template /etc/nginx/templates/default.conf.template
