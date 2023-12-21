@@ -1,11 +1,9 @@
-FROM node:18.18.0-alpine3.18 AS build
-
+FROM node:16.14
 WORKDIR /app
-COPY ["package.json", "package-lock.json", "./"]
-RUN ["npm", "ci"]
-COPY . .
-RUN ["npx", "ng", "build"]
+COPY package.json ./
+RUN npm install
+COPY ./ ./
+RUN mkdir cache && npm install -g npm@10.2.5 && npm config set cache ./cache --global && npm ci
+RUN chown -R node /app && chmod -R 777 /app && chmod -R o+t /app 
 
-FROM nginxinc/nginx-unprivileged:alpine3.18-perl
-COPY --chown=nginx:nginx ./nginx/default.conf.template /etc/nginx/templates/default.conf.template
-COPY --chown=nginx:nginx --from=build /app/dist/frontend/browser /var/www/html/
+CMD ["npm", "start"]
