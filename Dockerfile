@@ -10,7 +10,7 @@ RUN if [ ! -d "/app/.angular" ]; then mkdir /app/.angular; fi
 RUN chown -R 1013690000:0 /.npm
 RUN chown -R 1013690000:0 /app/.angular
 ENV API_URL=https://clinic-reservation-back-git-amrmahmoud33-dev.apps.sandbox-m2.ll9k.p1.openshiftapps.com
-RUN sed -i "s|DEFAULT_API_URL|$API_URL|g" src/environments/environment.prod.ts
 USER 1013690000
 COPY . .
+RUN sed -i "s|DEFAULT_API_URL|$API_URL|g" src/environments/environment.prod.ts
 CMD ["npm", "start"]
